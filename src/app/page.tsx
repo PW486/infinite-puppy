@@ -1,66 +1,43 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import MasonryGallery from "@/components/MasonryGallery";
+import { Dog } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <div className="min-h-screen bg-white">
+      {/* Clean Header */}
+      <header className="sticky top-0 z-[60] bg-white/80 backdrop-blur-xl px-12 py-8 border-b border-black/5">
+        <div className="max-w-[1800px] mx-auto flex items-center justify-center">
+          <div className="flex items-center" style={{ gap: '10px' }}>
+            <div 
+              className="bg-black p-3.5 rounded-[22px] text-white shadow-xl shadow-black/10"
+              style={{ transform: 'translateY(4px)' }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <Dog size={32} strokeWidth={2.5} />
+            </div>
+            <h1 className="text-4xl font-black tracking-tighter text-black">
+              Infinite<span className="text-gray-300">Puppy</span>
+            </h1>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Gallery */}
+      <main className="py-12">
+        <MasonryGallery />
+      </main>
+
+      {/* Simple Footer */}
+      <footer className="py-20 border-t border-black/5">
+        <div className="max-w-[1800px] mx-auto flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2 opacity-10">
+            <Dog size={24} />
+            <span className="text-xl font-black tracking-tighter">InfinitePuppy</span>
+          </div>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-black/20">
+            © 2026 Infinite Puppy
           </p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
     </div>
   );
 }
