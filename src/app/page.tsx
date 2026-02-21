@@ -4,15 +4,15 @@ import { Dog } from "lucide-react";
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Clean Header */}
-      <header className="sticky top-0 z-[60] bg-white/80 backdrop-blur-xl px-12 py-8 border-b border-black/5">
+      {/* Clean Header - Now scrolls with the content */}
+      <header style={{ padding: '60px 0' }}>
         <div className="max-w-[1800px] mx-auto flex items-center justify-center">
           <div className="flex items-center" style={{ gap: '10px' }}>
             <div 
               className="bg-black p-3.5 rounded-[22px] text-white shadow-xl shadow-black/10"
               style={{ transform: 'translateY(4px)' }}
             >
-              <Dog size={32} strokeWidth={2.5} />
+              <Dog size={32} strokeWidth={2} />
             </div>
             <h1 className="text-4xl font-black tracking-tighter text-black">
               Infinite<span className="text-gray-300">Puppy</span>
@@ -21,8 +21,8 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Gallery */}
-      <main className="py-12">
+      {/* Main Gallery - Tighter padding */}
+      <main className="pb-12">
         <MasonryGallery />
       </main>
 

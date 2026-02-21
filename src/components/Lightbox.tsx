@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect } from 'react';
 import { MediaItem, PexelsPhoto, PexelsVideo } from '../lib/pexels';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Play } from 'lucide-react';
+import { X } from 'lucide-react';
 import Image from 'next/image';
 
 interface LightboxProps {
@@ -11,6 +12,22 @@ interface LightboxProps {
 }
 
 export default function Lightbox({ item, onClose }: LightboxProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    if (item) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [item, onClose]);
+
   if (!item) return null;
 
   const isVideo = item.type === 'video';
@@ -21,56 +38,117 @@ export default function Lightbox({ item, onClose }: LightboxProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-white/95 backdrop-blur-3xl flex items-center justify-center p-4"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1000,
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
+          backdropFilter: 'blur(20px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '40px'
+        }}
         onClick={onClose}
       >
-        {/* Close Button Top-Right Only */}
+        {/* Floating Close Button */}
         <button 
-          className="absolute top-10 right-10 w-14 h-14 bg-black text-white rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-transform z-50 shadow-2xl"
-          onClick={onClose}
+          style={{
+            position: 'fixed',
+            top: '40px',
+            right: '40px',
+            width: '56px',
+            height: '56px',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '50%',
+            color: 'white',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1100,
+            transition: 'all 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = 'white';
+            e.currentTarget.style.color = 'black';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            e.currentTarget.style.color = 'white';
+          }}
+          onClick={(e) => {
+            e.stopPropagation(); // Only the button handles this click
+            onClose();
+          }}
         >
-          <X size={28} strokeWidth={2.5} />
+          <X size={28} strokeWidth={2} />
         </button>
 
-        {/* Video / Image Display (Pure Focus) */}
+        {/* Media Container - Now strictly wraps content shape */}
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
+          exit={{ scale: 0.95, opacity: 0 }}
           transition={{ type: "spring", damping: 30, stiffness: 300 }}
-          className="relative w-full h-[85vh] flex items-center justify-center"
-          onClick={(e) => e.stopPropagation()}
+          style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'default' // Inside media, cursor is normal
+          }}
+          onClick={(e) => e.stopPropagation()} // Stop propagation only on the actual media
         >
           {isVideo ? (
-            <div className="relative max-w-full max-h-full">
-              <video
-                src={(item as PexelsVideo).video_files[0]?.link}
-                controls
-                autoPlay
-                className="max-w-full max-h-full object-contain shadow-[0_40px_100px_rgba(0,0,0,0.15)] rounded-2xl"
-              />
-              <div className="absolute -top-4 -right-4 bg-black p-4 rounded-full text-white shadow-xl">
-                <Play size={20} fill="white" />
-              </div>
-            </div>
+            <video
+              src={(item as PexelsVideo).video_files[0]?.link}
+              poster={(item as PexelsVideo).image}
+              controls
+              autoPlay
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '85vh',
+                borderRadius: '24px',
+                boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
+                backgroundColor: 'black',
+                display: 'block'
+              }}
+            />
           ) : (
-            <div className="relative w-full h-full">
+            <div style={{ 
+              position: 'relative', 
+              width: 'auto',
+              maxWidth: '90vw',
+              maxHeight: '85vh',
+              aspectRatio: `${item.width} / ${item.height}`,
+              borderRadius: '24px',
+              overflow: 'hidden',
+              boxShadow: '0 40px 100px rgba(0,0,0,0.6)'
+            }}>
               <Image
                 src={(item as PexelsPhoto).src.large}
                 alt="Cute puppy"
-                fill
-                className="object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.15)]"
+                width={item.width}
+                height={item.height}
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  maxWidth: '90vw',
+                  maxHeight: '85vh',
+                  objectFit: 'contain'
+                }}
                 priority
                 quality={100}
               />
             </div>
           )}
         </motion.div>
-
-        {/* Brand Accent */}
-        <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-10">
-          <p className="text-[10px] font-black uppercase tracking-[0.8em] text-black">Infinite Puppy</p>
-        </div>
       </motion.div>
     </AnimatePresence>
   );

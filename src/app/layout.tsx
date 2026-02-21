@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Infinite Puppy - Endless Dog Cuteness",
-  description: "A Pinterest-style gallery for dog lovers. Watch and enjoy infinite puppies, one scroll at a time.",
+  title: "InfinitePuppy",
+  description: "Endless Dog Cuteness, One Scroll at a Time.",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 

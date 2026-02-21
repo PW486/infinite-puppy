@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { MediaItem, fetchDogMedia } from '../lib/pexels';
 import DogCard from './DogCard';
 import Lightbox from './Lightbox';
@@ -9,66 +9,116 @@ import { Loader2 } from 'lucide-react';
 export default function MasonryGallery() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const observerTarget = useRef<HTMLDivElement>(null);
+  
+  const pageRef = useRef(1);
+  const isFetching = useRef(false);
+
+  // Responsive column count logic
+  const [columnCount, setColumnCount] = useState(5);
+
+  useEffect(() => {
+    const updateColumns = () => {
+      if (window.innerWidth < 480) setColumnCount(1);
+      else if (window.innerWidth < 768) setColumnCount(2);
+      else if (window.innerWidth < 1200) setColumnCount(3);
+      else if (window.innerWidth < 1600) setColumnCount(4);
+      else setColumnCount(5);
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  // Stable Column Distribution
+  // Once an item is assigned to a column index, it never moves to another column
+  const columns = useMemo(() => {
+    const cols: MediaItem[][] = Array.from({ length: columnCount }, () => []);
+    items.forEach((item, index) => {
+      cols[index % columnCount].push(item);
+    });
+    return cols;
+  }, [items, columnCount]);
 
   const loadMore = useCallback(async () => {
-    if (loading || !hasMore) return;
+    if (isFetching.current || !hasMore) return;
+    
+    isFetching.current = true;
     setLoading(true);
     
     try {
-      const nextItems = await fetchDogMedia(page);
-      if (nextItems.length === 0) {
+      const nextItems = await fetchDogMedia(pageRef.current);
+      if (!nextItems || nextItems.length === 0) {
         setHasMore(false);
       } else {
-        setItems(prev => [...prev, ...nextItems]);
-        setPage(prev => prev + 1);
+        setItems(prev => {
+          const existingIds = new Set(prev.map(i => i.id));
+          const filtered = nextItems.filter(i => !existingIds.has(i.id));
+          return [...prev, ...filtered];
+        });
+        pageRef.current += 1;
       }
     } catch (err) {
-      console.error("Failed to load dogs:", err);
+      console.error("Fetch failed:", err);
     } finally {
       setLoading(false);
+      isFetching.current = false;
     }
-  }, [page, loading, hasMore]);
+  }, [hasMore]);
 
-  // Initial load
   useEffect(() => {
     loadMore();
   }, []);
 
-  // Intersection Observer for Infinite Scroll
+  const observerTarget = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting && !isFetching.current) {
           loadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '400px' }
     );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
+    if (observerTarget.current) observer.observe(observerTarget.current);
     return () => observer.disconnect();
-  }, [loadMore, hasMore]);
+  }, [loadMore]);
 
   return (
-    <div className="w-full relative px-12">
-      <div className="masonry-grid">
-        {items.map((item, idx) => (
-          <DogCard 
-            key={`${item.id}-${idx}`} 
-            item={item} 
-            onClick={() => setSelectedItem(item)}
-          />
+    <div className="w-full relative" style={{ padding: '0 60px' }}>
+      {/* Manually managed columns for perfect stability */}
+      <div 
+        style={{ 
+          display: 'flex', 
+          gap: '24px', 
+          maxWidth: '1800px', 
+          margin: '0 auto',
+          alignItems: 'start' 
+        }}
+      >
+        {columns.map((colItems, colIdx) => (
+          <div 
+            key={`col-${colIdx}`} 
+            style={{ 
+              flex: 1, 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '24px' 
+            }}
+          >
+            {colItems.map((item, itemIdx) => (
+              <DogCard 
+                key={`${item.id}-${itemIdx}`} 
+                item={item} 
+                onClick={() => setSelectedItem(item)}
+              />
+            ))}
+          </div>
         ))}
       </div>
 
-      {/* Minimal Loading Sentinel */}
       <div ref={observerTarget} className="flex flex-col items-center justify-center py-32 w-full">
         {loading && (
           <div className="flex flex-col items-center gap-6 text-black/20">
@@ -77,13 +127,10 @@ export default function MasonryGallery() {
           </div>
         )}
         {!hasMore && (
-          <div className="flex flex-col items-center gap-4 text-black/10">
-            <p className="font-black text-[9px] uppercase tracking-[0.6em]">End of Collection</p>
-          </div>
+          <p className="font-black text-[9px] uppercase tracking-[0.6em] text-black/10">End of Collection</p>
         )}
       </div>
 
-      {/* Immersive Detail View */}
       <Lightbox 
         item={selectedItem} 
         onClose={() => setSelectedItem(null)} 

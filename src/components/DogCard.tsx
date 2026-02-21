@@ -19,12 +19,17 @@ export default function DogCard({ item, onClick }: DogCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -50px 0px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="dog-card group relative"
+      className="dog-card group"
       onClick={onClick}
+      style={{ 
+        aspectRatio: `${item.width} / ${item.height}`,
+        position: 'relative',
+        overflow: 'hidden'
+      }}
     >
-      <div className="relative overflow-hidden w-full h-full bg-gray-50 aspect-auto">
+      <div style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#f5f5f5' }}>
         {isVideo ? (
-          <div className="relative w-full h-full">
+          <>
             <video
               src={(item as PexelsVideo).video_files[0]?.link}
               poster={(item as PexelsVideo).image}
@@ -37,29 +42,47 @@ export default function DogCard({ item, onClick }: DogCardProps) {
                 video.pause();
                 video.currentTime = 0;
               }}
-              className="w-full h-auto block object-cover max-h-[600px] transition-all duration-700 group-hover:scale-105"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              className="transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Video Indicator - ALWAYS KEEP THIS */}
-            <div className="absolute top-4 right-4 bg-white/90 p-3 rounded-full text-black shadow-lg">
-              <Play size={14} fill="black" />
+            
+            {/* Minimal Video Badge - Professional Style */}
+            <div 
+              style={{ 
+                position: 'absolute', 
+                top: '12px', 
+                left: '12px', 
+                zIndex: 100,
+                pointerEvents: 'none'
+              }}
+              className="opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              <div style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                backdropFilter: 'blur(12px)',
+                padding: '8px',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Play size={10} fill="white" color="white" strokeWidth={3} />
+              </div>
             </div>
-          </div>
+          </>
         ) : (
-          <div className="relative w-full h-full overflow-hidden">
-            <Image
-              src={(item as PexelsPhoto).src.large}
-              alt="Cute dog"
-              width={item.width}
-              height={item.height}
-              className="w-full h-auto block object-cover max-h-[600px] transition-all duration-700 group-hover:scale-105"
-              sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1100px) 33vw, 20vw"
-              priority={false}
-            />
-          </div>
+          <Image
+            src={(item as PexelsPhoto).src.large}
+            alt="Cute dog"
+            width={item.width}
+            height={item.height}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            className="transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1100px) 33vw, 20vw"
+            priority={false}
+          />
         )}
-
-        {/* Hover Accent Only (No Author Info) */}
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </div>
     </motion.div>
   );
