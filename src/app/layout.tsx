@@ -12,20 +12,20 @@ export const metadata: Metadata = {
   creator: "InfinitePuppy",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    icon: "/infinite-puppy/favicon.png",
+    shortcut: "/infinite-puppy/favicon.png",
+    apple: "/infinite-puppy/favicon.png",
   },
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "https://infinite-puppy.vercel.app", // 실제 도메인이 있다면 변경 필요
+    url: "https://pw486.github.io/infinite-puppy",
     title: "InfinitePuppy - Endless Dog Cuteness",
     description: "Endless Dog Cuteness, One Scroll at a Time. Discover cute puppies.",
     siteName: "InfinitePuppy",
     images: [
       {
-        url: "/favicon.png", // 대표 이미지가 있다면 해당 경로로 변경
+        url: "/infinite-puppy/favicon.png",
         width: 512,
         height: 512,
         alt: "InfinitePuppy Logo",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "InfinitePuppy - Endless Dog Cuteness",
     description: "Endless Dog Cuteness, One Scroll at a Time. Discover cute puppies.",
-    images: ["/favicon.png"],
+    images: ["/infinite-puppy/favicon.png"],
   },
   robots: {
     index: true,
@@ -61,9 +61,9 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "InfinitePuppy",
     alternateName: "Puppy Infinite Gallery",
-    url: "https://infinite-puppy.vercel.app",
+    url: "https://pw486.github.io/infinite-puppy",
     description: "Endless Dog Cuteness, One Scroll at a Time.",
-    image: "/favicon.png",
+    image: "/infinite-puppy/favicon.png",
   };
 
   return (

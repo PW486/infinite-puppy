@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://infinite-puppy.vercel.app/sitemap.xml',
+    sitemap: 'https://pw486.github.io/infinite-puppy/sitemap.xml',
   };
 }

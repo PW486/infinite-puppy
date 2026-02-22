@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -10,6 +11,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Repository name for GitHub Pages
+  basePath: '/infinite-puppy',
+  assetPrefix: '/infinite-puppy',
 };
+
+export default nextConfig;
 
 export default nextConfig;
