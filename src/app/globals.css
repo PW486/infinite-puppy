@@ -85,7 +85,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px; /* Explicitly apply radius to media */
+  border-radius: 12px;
 }
 
 /* Utility Classes */
@@ -122,4 +122,19 @@ body {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* Lightbox Mobile Adjustments */
+@media (max-width: 768px) {
+  .lightbox-close {
+    top: 20px !important;
+    right: 20px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  
+  .lightbox-close svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
 }

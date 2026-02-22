@@ -36,7 +36,15 @@ export default function DogCard({ item, onClick }: DogCardProps) {
               loop
               muted
               playsInline
-              onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
+              onMouseEnter={(e) => {
+                const video = e.target as HTMLVideoElement;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                  playPromise.catch(() => {
+                    // Ignore interruption errors
+                  });
+                }
+              }}
               onMouseLeave={(e) => {
                 const video = e.target as HTMLVideoElement;
                 video.pause();

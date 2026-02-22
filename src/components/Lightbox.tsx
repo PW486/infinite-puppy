@@ -56,6 +56,7 @@ export default function Lightbox({ item, onClose }: LightboxProps) {
       >
         {/* Floating Close Button */}
         <button 
+          className="lightbox-close"
           style={{
             position: 'fixed',
             top: '40px',
@@ -83,14 +84,13 @@ export default function Lightbox({ item, onClose }: LightboxProps) {
             e.currentTarget.style.color = 'white';
           }}
           onClick={(e) => {
-            e.stopPropagation(); // Only the button handles this click
+            e.stopPropagation();
             onClose();
           }}
         >
           <X size={28} strokeWidth={2} />
         </button>
 
-        {/* Media Container - Now strictly wraps content shape */}
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -101,9 +101,9 @@ export default function Lightbox({ item, onClose }: LightboxProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            cursor: 'default' // Inside media, cursor is normal
+            cursor: 'default'
           }}
-          onClick={(e) => e.stopPropagation()} // Stop propagation only on the actual media
+          onClick={(e) => e.stopPropagation()}
         >
           {isVideo ? (
             <video

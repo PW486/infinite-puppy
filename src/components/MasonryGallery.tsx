@@ -33,7 +33,6 @@ export default function MasonryGallery() {
   }, []);
 
   // Stable Column Distribution
-  // Once an item is assigned to a column index, it never moves to another column
   const columns = useMemo(() => {
     const cols: MediaItem[][] = Array.from({ length: columnCount }, () => []);
     items.forEach((item, index) => {
@@ -88,7 +87,6 @@ export default function MasonryGallery() {
 
   return (
     <div className="w-full relative" style={{ padding: '0 60px' }}>
-      {/* Manually managed columns for perfect stability */}
       <div 
         style={{ 
           display: 'flex', 
@@ -119,9 +117,12 @@ export default function MasonryGallery() {
         ))}
       </div>
 
-      <div ref={observerTarget} className="flex flex-col items-center justify-center py-32 w-full">
+      <div ref={observerTarget} className="flex flex-col items-center justify-center py-60 w-full">
         {loading && (
-          <div className="flex flex-col items-center gap-6 text-black/20">
+          <div 
+            className="flex flex-col items-center gap-8 text-black/20"
+            style={{ marginTop: '100px' }}
+          >
             <Loader2 className="animate-spin" size={24} strokeWidth={2} />
             <span className="font-black tracking-[0.4em] text-[9px] uppercase">Loading Content</span>
           </div>

@@ -1,5 +1,4 @@
 import MasonryGallery from "@/components/MasonryGallery";
-import { Dog } from "lucide-react";
 
 export default function Home() {
   return (
@@ -8,12 +7,6 @@ export default function Home() {
       <header style={{ padding: '60px 0' }}>
         <div className="max-w-[1800px] mx-auto flex items-center justify-center">
           <div className="flex items-center" style={{ gap: '10px' }}>
-            <div 
-              className="bg-black p-3.5 rounded-[22px] text-white shadow-xl shadow-black/10"
-              style={{ transform: 'translateY(4px)' }}
-            >
-              <Dog size={32} strokeWidth={2} />
-            </div>
             <h1 className="text-4xl font-black tracking-tighter text-black">
               Infinite<span className="text-gray-300">Puppy</span>
             </h1>
@@ -29,10 +22,6 @@ export default function Home() {
       {/* Simple Footer */}
       <footer className="py-20 border-t border-black/5">
         <div className="max-w-[1800px] mx-auto flex flex-col items-center gap-4">
-          <div className="flex items-center gap-2 opacity-10">
-            <Dog size={24} />
-            <span className="text-xl font-black tracking-tighter">InfinitePuppy</span>
-          </div>
           <p className="text-[10px] font-bold uppercase tracking-widest text-black/20">
             © 2026 Infinite Puppy
           </p>

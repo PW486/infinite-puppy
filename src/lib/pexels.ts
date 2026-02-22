@@ -54,7 +54,7 @@ export async function fetchDogMedia(page: number = 1, perPage: number = 20): Pro
   try {
     // Fetch photos
     const photoRes = await fetch(
-      `${PEXELS_API_URL}/search?query=dog&per_page=${perPage}&page=${page}`,
+      `${PEXELS_API_URL}/search?query=puppy&per_page=${perPage}&page=${page}`,
       { headers: { Authorization: apiKey } }
     );
     const photoData = await photoRes.json();
@@ -64,7 +64,7 @@ export async function fetchDogMedia(page: number = 1, perPage: number = 20): Pro
     let videos: MediaItem[] = [];
     if (page % 2 === 1) { // Fetch videos only on odd pages to mix them in
       const videoRes = await fetch(
-        `${PEXELS_VIDEO_URL}/search?query=dog&per_page=5&page=${Math.ceil(page / 2)}`,
+        `${PEXELS_VIDEO_URL}/search?query=puppy&per_page=5&page=${Math.ceil(page / 2)}`,
         { headers: { Authorization: apiKey } }
       );
       const videoData = await videoRes.json();

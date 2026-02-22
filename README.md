@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐶 InfinitePuppy
 
-## Getting Started
+**InfinitePuppy** is a minimalist image gallery service that leverages the Pexels API to provide an endless stream of cute puppy photos and videos.
 
-First, run the development server:
+![InfinitePuppy Logo](./public/favicon.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Key Features
+- **Infinite Scroll**: New puppy content loads automatically as you scroll down.
+- **Responsive Masonry Layout**: Arranges images of various sizes in a grid optimized for any screen size.
+- **Video Previews**: Hover over video cards to instantly play a preview of the puppy video.
+- **Lightbox Modal**: Click to view high-resolution images and videos in a full-screen modal with a sleek blur effect.
+- **SEO Optimized**: Fully configured with Meta Tags, JSON-LD, Sitemap, and Robots for maximum search engine visibility.
+
+## 🛠 Tech Stack
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Styling**: Vanilla CSS (Modern & Minimalist)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **API**: [Pexels API](https://www.pexels.com/api/)
+- **Language**: TypeScript
+
+## 🚀 Getting Started
+
+### 1. Environment Variables
+Create a `.env.local` file and add your Pexels API key.
+```env
+NEXT_PUBLIC_PEXELS_API_KEY=your_api_key_here
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install and Run
+```bash
+npm install
+npm run dev
+```
+Open `http://localhost:3000` in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
+- `src/app`: Page layouts and SEO configurations.
+- `src/components`: UI components including Gallery, Cards, and Lightbox.
+- `src/lib`: API fetching logic.
+- `public`: Favicon and static assets.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+© 2026 Infinite Puppy. All rights reserved.
