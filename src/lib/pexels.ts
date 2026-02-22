@@ -46,13 +46,9 @@ export type MediaItem = PexelsPhoto | PexelsVideo;
 export async function fetchDogMedia(page: number = 1, perPage: number = 20): Promise<MediaItem[]> {
   const apiKey = process.env.NEXT_PUBLIC_PEXELS_API_KEY;
 
-  if (!apiKey) {
-    console.warn("PEXELS_API_KEY is missing. Returning empty array.");
-    return [];
-  }
+  if (!apiKey) return [];
 
   try {
-    // Fetch photos
     const photoRes = await fetch(
       `${PEXELS_API_URL}/search?query=puppy&per_page=${perPage}&page=${page}`,
       { headers: { Authorization: apiKey } }
@@ -60,9 +56,8 @@ export async function fetchDogMedia(page: number = 1, perPage: number = 20): Pro
     const photoData = await photoRes.json();
     const photos: MediaItem[] = (photoData.photos || []).map((p: any) => ({ ...p, type: 'photo' }));
 
-    // Fetch videos (occasionally)
     let videos: MediaItem[] = [];
-    if (page % 2 === 1) { // Fetch videos only on odd pages to mix them in
+    if (page % 2 === 1) {
       const videoRes = await fetch(
         `${PEXELS_VIDEO_URL}/search?query=puppy&per_page=5&page=${Math.ceil(page / 2)}`,
         { headers: { Authorization: apiKey } }
@@ -71,10 +66,9 @@ export async function fetchDogMedia(page: number = 1, perPage: number = 20): Pro
       videos = (videoData.videos || []).map((v: any) => ({ ...v, type: 'video' }));
     }
 
-    // Interleave photos and videos
     const mixedMedia: MediaItem[] = [...photos];
     videos.forEach((v, i) => {
-      const index = (i + 1) * 4; // Place video every 4th photo
+      const index = (i + 1) * 4;
       if (index < mixedMedia.length) {
         mixedMedia.splice(index, 0, v);
       } else {
@@ -84,7 +78,6 @@ export async function fetchDogMedia(page: number = 1, perPage: number = 20): Pro
 
     return mixedMedia;
   } catch (error) {
-    console.error("Error fetching media from Pexels:", error);
     return [];
   }
 }

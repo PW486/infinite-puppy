@@ -20,47 +20,41 @@ export default function MasonryGallery() {
 
   useEffect(() => {
     const updateColumns = () => {
-      if (window.innerWidth < 480) setColumnCount(1);
-      else if (window.innerWidth < 768) setColumnCount(2);
-      else if (window.innerWidth < 1200) setColumnCount(3);
-      else if (window.innerWidth < 1600) setColumnCount(4);
+      const w = window.innerWidth;
+      if (w < 480) setColumnCount(1);
+      else if (w < 768) setColumnCount(2);
+      else if (w < 1200) setColumnCount(3);
+      else if (w < 1600) setColumnCount(4);
       else setColumnCount(5);
     };
-
     updateColumns();
     window.addEventListener('resize', updateColumns);
     return () => window.removeEventListener('resize', updateColumns);
   }, []);
 
-  // Stable Column Distribution
   const columns = useMemo(() => {
     const cols: MediaItem[][] = Array.from({ length: columnCount }, () => []);
-    items.forEach((item, index) => {
-      cols[index % columnCount].push(item);
-    });
+    items.forEach((item, index) => cols[index % columnCount].push(item));
     return cols;
   }, [items, columnCount]);
 
   const loadMore = useCallback(async () => {
     if (isFetching.current || !hasMore) return;
-    
     isFetching.current = true;
     setLoading(true);
-    
     try {
       const nextItems = await fetchDogMedia(pageRef.current);
       if (!nextItems || nextItems.length === 0) {
         setHasMore(false);
       } else {
         setItems(prev => {
-          const existingIds = new Set(prev.map(i => i.id));
-          const filtered = nextItems.filter(i => !existingIds.has(i.id));
-          return [...prev, ...filtered];
+          const ids = new Set(prev.map(i => i.id));
+          return [...prev, ...nextItems.filter(i => !ids.has(i.id))];
         });
         pageRef.current += 1;
       }
-    } catch (err) {
-      console.error("Fetch failed:", err);
+    } catch {
+      // Silently fail
     } finally {
       setLoading(false);
       isFetching.current = false;

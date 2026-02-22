@@ -54,16 +54,10 @@ export default function DogCard({ item, onClick }: DogCardProps) {
               className="transition-transform duration-700 group-hover:scale-105"
             />
             
-            {/* Minimal Video Badge - Professional Style */}
+            {/* Video Badge */}
             <div 
-              style={{ 
-                position: 'absolute', 
-                top: '12px', 
-                left: '12px', 
-                zIndex: 100,
-                pointerEvents: 'none'
-              }}
               className="opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 100, pointerEvents: 'none' }}
             >
               <div style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.2)',
