@@ -3,10 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "InfinitePuppy - Endless Dog Cuteness",
+    default: "InfinitePuppy",
     template: "%s | InfinitePuppy"
   },
-  description: "Endless Dog Cuteness, One Scroll at a Time. Discover cute puppies and high-quality dog media.",
+  description: "Discover cute puppies and high-quality media, one scroll at a time.",
   keywords: ["puppy", "dog", "cute animals", "infinite scroll", "dog photography", "puppy videos"],
   authors: [{ name: "InfinitePuppy Team" }],
   creator: "InfinitePuppy",
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: "https://pw486.github.io/infinite-puppy",
-    title: "InfinitePuppy - Endless Dog Cuteness",
-    description: "Endless Dog Cuteness, One Scroll at a Time. Discover cute puppies.",
+    title: "InfinitePuppy",
+    description: "Discover cute puppies, one scroll at a time.",
     siteName: "InfinitePuppy",
     images: [
       {
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "InfinitePuppy - Endless Dog Cuteness",
-    description: "Endless Dog Cuteness, One Scroll at a Time. Discover cute puppies.",
+    title: "InfinitePuppy",
+    description: "Discover cute puppies, one scroll at a time.",
     images: ["/infinite-puppy/favicon.png"],
   },
   robots: {
@@ -62,7 +62,7 @@ export default function RootLayout({
     name: "InfinitePuppy",
     alternateName: "Puppy Infinite Gallery",
     url: "https://pw486.github.io/infinite-puppy",
-    description: "Endless Dog Cuteness, One Scroll at a Time.",
+    description: "Discover cute puppies, one scroll at a time.",
     image: "/infinite-puppy/favicon.png",
   };
 
