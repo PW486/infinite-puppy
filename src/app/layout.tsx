@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "InfinitePuppy",
     images: [
       {
-        url: "/infinite-puppy/og-image.png",
+        url: "https://pw486.github.io/infinite-puppy/og-image.png",
         width: 1200,
         height: 630,
         alt: "InfinitePuppy",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "InfinitePuppy",
     description: "Discover cute puppies, one scroll at a time.",
-    images: ["/infinite-puppy/og-image.png"],
+    images: ["https://pw486.github.io/infinite-puppy/og-image.png"],
   },
   robots: {
     index: true,
@@ -63,7 +63,7 @@ export default function RootLayout({
     alternateName: "Puppy Infinite Gallery",
     url: "https://pw486.github.io/infinite-puppy",
     description: "Discover cute puppies, one scroll at a time.",
-    image: "/infinite-puppy/og-image.png",
+    image: "https://pw486.github.io/infinite-puppy/og-image.png",
   };
 
   return (
