@@ -23,7 +23,7 @@ export default function Home() {
       <footer className="py-20 border-t border-black/5">
         <div className="max-w-[1800px] mx-auto flex flex-col items-center gap-4">
           <p className="text-[10px] font-bold uppercase tracking-widest text-black/20">
-            © 2026 Infinite Puppy
+            © 2026 InfinitePuppy
           </p>
         </div>
       </footer>

@@ -1,6 +1,6 @@
 # 🐶 InfinitePuppy
 
-A minimalist, high-performance puppy gallery powered by Next.js and Pexels API.
+Explore an infinite world of adorable puppies and discover pure joy in every scroll.
 
 ## 🚀 Features
 - **Endless Content**: Infinite scroll with interleaved photos and videos.
@@ -16,4 +16,4 @@ Next.js 15, TypeScript, Framer Motion, Lucide, Pexels API.
 2. Run `npm install && npm run dev`.
 
 ---
-© 2026 Infinite Puppy.
+© 2026 InfinitePuppy.
