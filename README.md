@@ -14,6 +14,3 @@ Next.js 15, TypeScript, Framer Motion, Lucide, Pexels API.
 ## 🏃 Quick Start
 1. Add `NEXT_PUBLIC_PEXELS_API_KEY` to `.env.local`.
 2. Run `npm install && npm run dev`.
-
----
-© 2026 InfinitePuppy.
