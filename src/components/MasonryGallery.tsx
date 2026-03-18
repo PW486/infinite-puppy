@@ -34,7 +34,24 @@ export default function MasonryGallery() {
 
   const columns = useMemo(() => {
     const cols: MediaItem[][] = Array.from({ length: columnCount }, () => []);
-    items.forEach((item, index) => cols[index % columnCount].push(item));
+    const colHeights = new Array(columnCount).fill(0);
+
+    items.forEach((item) => {
+      let minColIndex = 0;
+      let minHeight = colHeights[0];
+
+      for (let i = 1; i < columnCount; i++) {
+        if (colHeights[i] < minHeight) {
+          minHeight = colHeights[i];
+          minColIndex = i;
+        }
+      }
+
+      cols[minColIndex].push(item);
+      const ratio = item.width && item.height ? item.height / item.width : 1.5;
+      colHeights[minColIndex] += ratio;
+    });
+
     return cols;
   }, [items, columnCount]);
 

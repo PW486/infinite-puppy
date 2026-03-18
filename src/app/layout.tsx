@@ -1,5 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -10,7 +16,6 @@ export const metadata: Metadata = {
   keywords: ["puppy", "dog", "cute animals", "infinite scroll", "dog photography", "puppy videos"],
   authors: [{ name: "PW486" }],
   creator: "PW486",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   icons: {
     icon: "/infinite-puppy/favicon.png",
     shortcut: "/infinite-puppy/favicon.png",
